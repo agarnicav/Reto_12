@@ -57,7 +57,7 @@ Listado de las 50 palabras que más se repiten
 
 ### Codigo 
 
-    def Contar_cantidad_palabras_repetidas(text: str) -> int:
+    def Contar_cantidad_palabras_repetidas(text: str) -> int: # Se define la función para dar el listado de las 50 palabras que mas se repiten
         Lista_signos = [".", ",", ":", ";", "_", "-", " "]  # Lista de signos de puntuación y espacios para filtrar las palabras
     
         palabras = text.split()  # Dividir el texto en palabras
@@ -104,7 +104,7 @@ Listado de las 50 palabras que más se repiten
 
 Listado de destinatarios con cantidad de mensajes recibidos
 
-    def Cantidadd_Mensajes_Recibidos(text: str) -> dict:
+    def Cantidadd_Mensajes_Recibidos(text: str) -> dict:  # Se define la función para encontrar la cantidad de mensajes recibidos por cada destinatario
         palabras = text.split()  # Dividir el texto en palabras
         mensajes_recibidos = {}  # Diccionario para almacenar la cantidad de mensajes recibidos por cada usuario
 
@@ -133,8 +133,81 @@ Listado de destinatarios con cantidad de mensajes recibidos
             
 # Quinto Punto 
 
+Cantidad de mensajes enviados por cada día
+
+### Codigo
+
+    def cantidad_mensajes_por_dia(text: str) -> dict: # Se define la función para encontrar la cantidad de mensaajes enviados por día
+        mensajes_recibidos = []  # Lista para almacenar los segmentos de mensajes recibidos
+        palabras = text.split()  # Dividir el texto en palabras
+
+        i = 0
+        while i < len(palabras):
+            if palabras[i] == "Received:":  # Verificar si la palabra actual es "Received:"
+                segmento = []
+                while i < len(palabras) and palabras[i] != "-0500" and palabras[i + 1] != "(GMT)": i < len(palabras): # Se verifica que el índice i sea menor que la longitud de la lista palabras y se omprueba que la palabra en la posición i de la lista palabras no sea igual a "-0500" se Verifica que la siguiente palabra después de palabras[i] no sea igual a "(GMT)".
 
 
-     
+                    segmento.append(palabras[i + 1])  # Agregar las palabras siguientes al segmento
+                    i += 1
+                mensajes_recibidos.append(segmento)  # Agregar el segmento de mensajes a la lista
+            i += 1
+
+        mensajes_dia = {}  # Diccionario para almacenar la cantidad de mensajes por día
+
+        for mensaje in mensajes_recibidos:
+            indice = mensaje.index("Jan")  # Encontrar el índice de la palabra "Jan" que indica el mes
+            dia = mensaje[indice - 1]  # Obtener el día anterior al mes
+
+            if dia in mensajes_dia:
+                mensajes_dia[dia] += 1  # Incrementar la cantidad de mensajes para ese día
+            else:
+                mensajes_dia[dia] = 1  # Agregar el día al diccionario con una cantidad de mensajes inicial de 1
+
+       return mensajes_dia
 
 
+    if __name__ == "__main__":
+        with open("mbox-short.txt", "r") as file:
+           texto = file.read()  # Leer el contenido del archivo en la variable 'texto'
+            cantidad = cantidad_mensajes_por_dia(texto)  # Llamar a la función 'cantidad_mensajes_por_dia' y pasarle el texto como argumento
+        
+            dias_totales = {}  # Diccionario para almacenar la cantidad total de mensajes por día
+
+            for dia, cantidad_mensajes in cantidad.items():
+               dia = dia.lstrip("0")  # Eliminar el cero inicial en caso de días de un solo dígito
+
+                if dia in dias_totales:
+                    dias_totales[dia] += cantidad_mensajes  # Incrementar la cantidad de mensajes para ese día
+                else:
+                    dias_totales[dia] = cantidad_mensajes  # Agregar el día al diccionario con una cantidad de mensajes inicial
+
+            for dia, cantidad_mensajes in dias_totales.items():
+                print("El día " + dia + " se enviaron " + str(cantidad_mensajes) + " mensajes")  # Imprimir la cantidad de mensajes por día
+
+
+## Consulta 
+Consulte que hacen los siguientes métodos de strings en python: endswith, startswith, isalpha, isalnum, isdigit, isspace, istitle, islower, isupper.
+
+endswith(suffix): Verifica si la cadena termina con el sufijo especificado. Retorna True si es así, y False en caso contrario.
+
+startswith(prefix): Verifica si la cadena comienza con el prefijo especificado. Retorna True si es así, y False en caso contrario.
+
+isalpha(): Verifica si todos los caracteres de la cadena son letras (alfabéticos). Retorna True si todos son letras, y False si hay al menos un carácter que no es una letra.
+
+isalnum(): Verifica si todos los caracteres de la cadena son alfanuméricos (letras o dígitos). Retorna True si todos son alfanuméricos, y False si hay al menos un carácter que no es alfanumérico.
+
+isdigit(): Verifica si todos los caracteres de la cadena son dígitos numéricos. Retorna True si todos son dígitos, y False si hay al menos un carácter que no es un dígito.
+
+isspace(): Verifica si todos los caracteres de la cadena son espacios en blanco. Retorna True si todos son espacios en blanco, y False si hay al menos un carácter que no es un espacio en blanco.
+
+istitle(): Verifica si la cadena está en formato de título, es decir, si todas las palabras tienen la primera letra en mayúscula y el resto en minúscula. Retorna True si está en formato de título, y False en caso contrario.
+
+islower(): Verifica si todos los caracteres de la cadena están en minúscula. Retorna True si todos son minúsculas, y False si hay al menos un carácter que no es minúscula.
+
+isupper(): Verifica si todos los caracteres de la cadena están en mayúscula. Retorna True si todos son mayúsculas, y False si hay al menos un carácter que no es mayúscula.
+
+
+
+
+ 
