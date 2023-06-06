@@ -147,8 +147,7 @@ Cantidad de mensajes enviados por cada día
                 segmento = []
                 while i < len(palabras) and palabras[i] != "-0500" and palabras[i + 1] != "(GMT)": i < len(palabras): # Se verifica que el índice i sea menor que la longitud de la lista palabras y se omprueba que la palabra en la posición i de la lista palabras no sea igual a "-0500" se Verifica que la siguiente palabra después de palabras[i] no sea igual a "(GMT)".
 
-
-                    segmento.append(palabras[i + 1])  # Agregar las palabras siguientes al segmento
+                segmento.append(palabras[i + 1])  # Agregar las palabras siguientes al segmento
                     i += 1
                 mensajes_recibidos.append(segmento)  # Agregar el segmento de mensajes a la lista
             i += 1
